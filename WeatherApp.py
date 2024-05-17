@@ -27,22 +27,22 @@ else:
         geolocator = Nominatim(user_agent="weather_app")
         location = geolocator.geocode(f"{city}, {state}")
 
-    if location:
+        if location:
         api_key = owm_api_key
         url = f'http://api.openweathermap.org/data/2.5/weather?lat={location.latitude}&lon={location.longitude}&appid={api_key}'
         st.write(url)
         response = requests.get(url)
         weather_data = response.json()
 
-        if 'main' in weather_data:
+           if 'main' in weather_data:
             # Valid city and state mapping
-            return True
+               return True
         else:
             # Invalid city and state mapping
-            return False
-    else:
-        # Invalid city or state name
-        return False
+               return False
+       else:
+           # Invalid city or state name
+           return False
         
     if st.button('Check'):
         if city and selected_state:
