@@ -20,11 +20,11 @@ selected_state = st.selectbox('Select a state', us_states)
 
 if st.button('Predict Weather'):
     if city and state:
-        location = f'{city},{state},US'
+        location = f'{city},{selected_state},US'
         try:
             input = mgr.weather_at_place(location)
             weather = input.weather
-            st.write(f'Weather forecast for {city}, {state}:')
+            st.write(f'Weather forecast for {city}, {selected_state}:')
             st.write(f'Temperature: {weather.temperature("fahrenheit")["temp"]} °F')
             st.write(f'Humidity: {weather.humidity} %')
             st.write(f'Wind Speed: {weather.wind()["speed"]} m/s')
@@ -32,4 +32,4 @@ if st.button('Predict Weather'):
         except Exception as e:
             st.error(f'Error: {e}')
     else:
-        st.warning('Please enter city and state')
+        st.warning('Please enter city and selected_state')
