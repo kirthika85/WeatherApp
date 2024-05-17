@@ -28,19 +28,19 @@ else:
         location = geolocator.geocode(f"{city}, {state}")
 
         if location:
-        api_key = owm_api_key
-        url = f'http://api.openweathermap.org/data/2.5/weather?lat={location.latitude}&lon={location.longitude}&appid={api_key}'
-        st.write(url)
-        response = requests.get(url)
-        weather_data = response.json()
+              api_key = owm_api_key
+              url = f'http://api.openweathermap.org/data/2.5/weather?lat={location.latitude}&lon={location.longitude}&appid={api_key}'
+              st.write(url)
+              response = requests.get(url)
+              weather_data = response.json()
 
-           if 'main' in weather_data:
-            # Valid city and state mapping
-               return True
+              if 'main' in weather_data:
+                  # Valid city and state mapping
+                  return True
+              else:
+                  # Invalid city and state mapping
+                  return False
         else:
-            # Invalid city and state mapping
-               return False
-       else:
            # Invalid city or state name
            return False
         
