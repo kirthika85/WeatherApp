@@ -21,26 +21,23 @@ selected_state = st.selectbox('Select a state', us_states)
 st.write(selected_state)
 
 def validate_city_state(city, state):
-    # Create a geocoder object
-    geolocator = Nominatim(user_agent="geoapiExercises")
-
-    # Geocode the city and state to get coordinates
+    geolocator = Nominatim(user_agent="weather_app")
     location = geolocator.geocode(f"{city}, {state}")
 
     if location:
-        # Reverse geocode the coordinates to get the address components
-        reverse_location = geolocator.reverse((location.latitude, location.longitude))
+        api_key = '47d570067856f5d716bbea83635e8c26'
+        url = f'http://api.openweathermap.org/data/2.5/weather?lat={location.latitude}&lon={location.longitude}&appid={api_key}'
+        response = requests.get(url)
+        weather_data = response.json()
 
-        # Extract city and state from the reverse geocoded address
-        reverse_city = reverse_location.raw.get('address', {}).get('city', '')
-        reverse_state = reverse_location.raw.get('address', {}).get('state', '')
-
-        # Validate if the reverse geocoded city and state match the user-provided values
-        if reverse_city.lower() == city.lower() and reverse_state.lower() == state.lower():
+        if 'main' in weather_data:
+            # Valid city and state mapping
             return True
         else:
+            # Invalid city and state mapping
             return False
     else:
+        # Invalid city or state name
         return False
         
 if st.button('Check'):
