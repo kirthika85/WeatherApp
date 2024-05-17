@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 from pyowm import OWM
-from uszipcode import ZipcodeSearchEngine
+from uszipcode import Zipcode
 owm = OWM('47d570067856f5d716bbea83635e8c26')
 mgr = owm.weather_manager()
 
@@ -19,7 +19,7 @@ us_states = [
 selected_state = st.selectbox('Select a state', us_states)
 
 def is_valid_city_state(city, state):
-    search = ZipcodeSearchEngine(simple_zipcode=True)
+    search = Zipcode(simple_zipcode=True)
     result = search.by_city_and_state(city, state)
     if result:
         print(f"The city '{city}', state '{state}' combination is valid.")
