@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 from pyowm import OWM
-owm = OWM('f2ec5e660b3c4e10df75b19b8782ff76')
+owm = OWM('47d570067856f5d716bbea83635e8c26')
 mgr = owm.weather_manager()
 
 # Streamlit app
