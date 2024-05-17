@@ -20,6 +20,7 @@ selected_state = st.selectbox('Select a state', us_states)
 def is_valid_city_state(city, state):
     api_key = "47d570067856f5d716bbea83635e8c26"
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{state},US&appid={api_key}"
+    print(url)
     response = requests.get(url)
     if response.status_code == 200:
         return True
