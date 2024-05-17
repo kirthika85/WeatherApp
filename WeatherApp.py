@@ -22,6 +22,7 @@ def is_valid_city_state(city, state):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{state},US&appid={api_key}"
     st.write(url)
     response = requests.get(url)
+    st.write(response)
     if response.status_code == 200:
         return True
     else:
