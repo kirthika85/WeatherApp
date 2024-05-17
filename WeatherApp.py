@@ -16,7 +16,23 @@ us_states = [
     'West Virginia', 'Wisconsin', 'Wyoming'
 ]
 selected_state = st.selectbox('Select a state', us_states)
-#state = st.text_input('Enter the state name')
+if st.button('Check'):
+    if city and selected_state:
+        if is_valid_city_state(city, selected_state):
+            st.success(f'{city} is a valid city in {selected_state}')
+        else:
+            st.error(f'{city} is not a valid city in {selected_state}')
+    else:
+        st.warning('Please enter both a city and select a state')
+
+def is_valid_city_state(city, state):
+    api_key = "47d570067856f5d716bbea83635e8c26"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{state},US&appid={api_key}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return True
+    else:
+        return False
 
 if st.button('Predict Weather'):
     if city and selected_state:
