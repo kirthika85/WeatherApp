@@ -19,7 +19,7 @@ selected_state = st.selectbox('Select a state', us_states)
 #state = st.text_input('Enter the state name')
 
 if st.button('Predict Weather'):
-    if city and state:
+    if city and selected_state:
         location = f'{city},{selected_state},US'
         try:
             input = mgr.weather_at_place(location)
