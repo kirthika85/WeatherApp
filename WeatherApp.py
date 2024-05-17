@@ -1,31 +1,31 @@
 import streamlit as st
 import requests
 from pyowm import OWM
+from uszipcode import SearchEngine
 owm = OWM('47d570067856f5d716bbea83635e8c26')
 mgr = owm.weather_manager()
 
 st.title('Weather Prediction App US')
 city = st.text_input('Enter the city name')
 us_states = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-    'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-    'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
-    'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-    'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-    'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
-    'West Virginia', 'Wisconsin', 'Wyoming'
+    'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE',
+    'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY',
+    'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO',
+    'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY',
+        'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
+    'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA',
+    'WV', 'WI', 'WY'
 ]
 selected_state = st.selectbox('Select a state', us_states)
 
 def is_valid_city_state(city, state):
-    api_key = "47d570067856f5d716bbea83635e8c26"
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{state},US&appid={api_key}"
-    st.write(url)
-    response = requests.get(url)
-    st.write(response)
-    if response.status_code == 200:
+    search = SearchEngine(simple_zipcode=True)
+    result = search.by_city_and_state(city, state)
+    if result:
+        print(f"The city '{city}', state '{state}' combination is valid.")
         return True
     else:
+        print(f"The city '{city}', state '{state}' combination is not valid.")
         return False
         
 if st.button('Check'):
