@@ -18,7 +18,7 @@ us_states = [
     'WV', 'WI', 'WY'
 ]
 selected_state = st.selectbox('Select a state', us_states)
-print(type(selected_state))
+st.write({selected_state})
 
 def validate_city_state(city, state):
     # Create a geocoder object
