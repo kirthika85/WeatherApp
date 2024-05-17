@@ -28,7 +28,7 @@ else:
         location = geolocator.geocode(f"{city}, {state}")
 
     if location:
-        api_key = '47d570067856f5d716bbea83635e8c26'
+        api_key = owm_api_key
         url = f'http://api.openweathermap.org/data/2.5/weather?lat={location.latitude}&lon={location.longitude}&appid={api_key}'
         st.write(url)
         response = requests.get(url)
