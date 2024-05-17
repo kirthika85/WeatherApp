@@ -2,4 +2,3 @@ streamlit
 requests
 pyowm
 uszipcode
-SearchEngine
