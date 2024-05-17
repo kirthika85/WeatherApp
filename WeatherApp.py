@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
 from pyowm import OWM
-from uszipcode import Zipcode
+from geopy.geocoders import Nominatim
+
 owm = OWM('47d570067856f5d716bbea83635e8c26')
 mgr = owm.weather_manager()
 
@@ -18,19 +19,32 @@ us_states = [
 ]
 selected_state = st.selectbox('Select a state', us_states)
 
-def is_valid_city_state(city, state):
-    search = Zipcode(simple_zipcode=True)
-    result = search.by_city_and_state(city, state)
-    if result:
-        print(f"The city '{city}', state '{state}' combination is valid.")
-        return True
+def validate_city_state(city, state):
+    # Create a geocoder object
+    geolocator = Nominatim(user_agent="geoapiExercises")
+
+    # Geocode the city and state to get coordinates
+    location = geolocator.geocode(f"{city}, {state}")
+
+    if location:
+        # Reverse geocode the coordinates to get the address components
+        reverse_location = geolocator.reverse((location.latitude, location.longitude))
+
+        # Extract city and state from the reverse geocoded address
+        reverse_city = reverse_location.raw.get('address', {}).get('city', '')
+        reverse_state = reverse_location.raw.get('address', {}).get('state', '')
+
+        # Validate if the reverse geocoded city and state match the user-provided values
+        if reverse_city.lower() == city.lower() and reverse_state.lower() == state.lower():
+            return True
+        else:
+            return False
     else:
-        print(f"The city '{city}', state '{state}' combination is not valid.")
         return False
         
 if st.button('Check'):
     if city and selected_state:
-        if is_valid_city_state(city, selected_state):
+        if validate_city_state(city, selected_state):
             st.success(f'{city} is a valid city in {selected_state}')
         else:
             st.error(f'{city} is not a valid city in {selected_state}')
