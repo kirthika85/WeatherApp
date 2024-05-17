@@ -27,6 +27,7 @@ def validate_city_state(city, state):
     if location:
         api_key = '47d570067856f5d716bbea83635e8c26'
         url = f'http://api.openweathermap.org/data/2.5/weather?lat={location.latitude}&lon={location.longitude}&appid={api_key}'
+        st.write(url)
         response = requests.get(url)
         weather_data = response.json()
 
